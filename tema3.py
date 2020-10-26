@@ -1,5 +1,7 @@
 import pygame
 from math import pi, cos, sin, atan2
+import time
+import random
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -158,7 +160,7 @@ class Raycaster:
 			a =  self.player["a"] - self.player["fov"]/2 + (i * self.player["fov"] / 500)
 			d, m, tx = self.cast_ray(a)
 			x = 500 + i
-			h = int(500 /(d * cos(a - self.player["a"]))) * 100
+			h = (500 /(d * cos(a - self.player["a"]))) * 50
 			self.draw_stake(x, h, tx, textures[m])
 
 		for i in range(0, 500):
@@ -172,6 +174,54 @@ class Raycaster:
 
 		self.draw_player(1000 - 256 - 128, 500 - 256)
 
+	
+	def text_objects(self, text, font):
+	    textSurface = font.render(text, True, BLACK)
+	    return textSurface, textSurface.get_rect()
+
+	def game_intro(self):
+	    intro = True
+
+	    while intro:
+	        for event in pygame.event.get():
+	            print(event)
+	            if event.type == pygame.QUIT:
+	                pygame.quit()
+	                quit()
+	            if event.type == pygame.KEYDOWN:
+	            	if event.key == pygame.K_0:
+	            		intro = False
+	            		self.game_start()
+	                
+	        gameDisplay.fill(WHITE)
+	        largeText = pygame.font.Font('freesansbold.ttf',115)
+	        TextSurf, TextRect = self.text_objects("A bit Racey", largeText)
+	        TextRect.center = ((1000/2),(500/2))
+	        gameDisplay.blit(TextSurf, TextRect)
+	        pygame.display.update()
+	        clock.tick(15)
+
+	def game_start(self):
+		while True:
+			screen.fill((0,0,0))
+			d = 10
+			for e in pygame.event.get():
+				if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
+					exit(0)
+				if e.type == pygame.KEYDOWN:
+					if e.key == pygame.K_LEFT:
+						r.player["a"] -= pi/20
+					if e.key == pygame.K_RIGHT:
+						r.player["a"] += pi/20
+					if e.key == pygame.K_UP:
+						r.player["x"] += int(d * cos(r.player["a"]))
+						r.player["y"] += int(d * sin(r.player["a"]))
+					if e.key == pygame.K_DOWN:
+						r.player["x"] -= int(d * cos(r.player["a"]))
+						r.player["y"] -= int(d * sin(r.player["a"]))
+			r.render()
+			pygame.display.flip()
+
 
 
 pygame.init()
@@ -179,8 +229,12 @@ screen = pygame.display.set_mode((1000, 500))
 screen.set_alpha(None)
 r = Raycaster(screen)
 r.load_map('./map.txt')
+gameDisplay = pygame.display.set_mode((1000,500))
+pygame.display.set_caption('A bit Racey')
+clock = pygame.time.Clock()
+r.game_intro()
 #render loop
-while True:
+"""while True:
 	screen.fill((0,0,0))
 	d = 10
 	for e in pygame.event.get():
@@ -198,5 +252,5 @@ while True:
 				r.player["x"] -= int(d * cos(r.player["a"]))
 				r.player["y"] -= int(d * sin(r.player["a"]))
 	r.render()
-	pygame.display.flip()
+	pygame.display.flip()"""
 
