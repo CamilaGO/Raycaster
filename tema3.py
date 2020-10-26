@@ -22,6 +22,8 @@ enemy2 = pygame.image.load('./sprite2.png')
 enemy3 = pygame.image.load('./sprite3.png')
 enemy4 = pygame.image.load('./sprite4.png')
 
+hand = pygame.image.load('./player.png')
+
 textures = {
 	"1": wall1,
 	"2": wall2,
@@ -66,6 +68,15 @@ class Raycaster:
 				c = texture.get_at((tx,ty))
 				self.point(cx, cy, c)
 
+
+	def draw_player(self, xi, yi, w = 256, h = 256):
+	    for x in range(xi, xi + w):
+	      for y in range(yi, yi + h):
+	        tx = int((x - xi) * 32/w)
+	        ty = int((y - yi) * 32/h)
+	        c = hand.get_at((tx, ty))
+	        if c != (152, 0, 136, 255):
+	          self.point(x, y, c)
 
 	def load_map(self, filename):
 		#se cargan mapas de archivos .txt
@@ -159,10 +170,13 @@ class Raycaster:
 			self.point(enemy["x"], enemy["y"], BLACK)
 			self.draw_sprite(enemy)
 
+		self.draw_player(1000 - 256 - 128, 500 - 256)
+
 
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 500))
+screen.set_alpha(None)
 r = Raycaster(screen)
 r.load_map('./map.txt')
 #render loop
