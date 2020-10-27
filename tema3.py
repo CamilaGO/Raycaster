@@ -223,6 +223,24 @@ class Raycaster:
 	        pygame.display.update()
 	        clock.tick(15)
 
+	def game_win(self):
+	    intro = True
+
+	    while intro:
+	        for event in pygame.event.get():
+	            print(event)
+	            if event.type == pygame.QUIT:
+	                pygame.quit()
+	                quit()
+	                
+	        gameDisplay.fill(WHITE)
+	        largeText = pygame.font.Font('freesansbold.ttf',115)
+	        TextSurf, TextRect = self.text_objects("You won", largeText)
+	        TextRect.center = ((1000/2),(500/2))
+	        gameDisplay.blit(TextSurf, TextRect)
+	        pygame.display.update()
+	        clock.tick(15)
+
 	def game_start(self):
 		reloj = pygame.time.Clock()
  
@@ -254,6 +272,8 @@ class Raycaster:
 						r.player["y"] -= int(d * sin(r.player["a"]))
 					if e.key == pygame.K_SPACE:
 						paused = not paused
+					if (r.player["x"] > 367) and (r.player["y"] > 263):
+						self.game_win()
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
 				minutos = segundos_totales // 60
