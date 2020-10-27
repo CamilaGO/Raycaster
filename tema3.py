@@ -5,6 +5,7 @@ import random
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+GRAY = (136,136,136)
 BACKGROUND = (0, 255, 255)
 
 colors = {
@@ -184,10 +185,8 @@ class Raycaster:
 
 	    while intro:
 	        for event in pygame.event.get():
-	            print(event)
-	            if event.type == pygame.QUIT:
-	                pygame.quit()
-	                quit()
+	            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+	                exit(0)
 	            if event.type == pygame.KEYDOWN:
 	            	if event.key == pygame.K_0:
 	            		intro = False
@@ -197,10 +196,10 @@ class Raycaster:
 	        largeText = pygame.font.Font('freesansbold.ttf',100)
 	        smallText = pygame.font.Font('freesansbold.ttf',40)
 	        TextSurf, TextRect = self.text_objects("Laberinto 8bits", largeText)
-	        TextRect.center = ((1000/2),(500/2))
+	        TextRect.center = (int(1000/2),int(500/2))
 	        gameDisplay.blit(TextSurf, TextRect)
 	        TextSurf, TextRect = self.text_objects("Presiona 0 para jugar", smallText)
-	        TextRect.center = ((1000/2),(700/2))
+	        TextRect.center = (int(1000/2),int(700/2))
 	        gameDisplay.blit(TextSurf, TextRect)
 	        pygame.display.update()
 	        clock.tick(15)
@@ -210,33 +209,44 @@ class Raycaster:
 
 	    while intro:
 	        for event in pygame.event.get():
-	            print(event)
-	            if event.type == pygame.QUIT:
-	                pygame.quit()
-	                quit()
+	            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+	                exit(0)
+	            if event.type == pygame.KEYDOWN:
+	            	if event.key == pygame.K_0:
+	            		intro =False
+	            		self.game_intro()
 	                
-	        gameDisplay.fill(WHITE)
-	        largeText = pygame.font.Font('freesansbold.ttf',115)
+	        gameDisplay.fill(GRAY)
+	        largeText = pygame.font.Font('freesansbold.ttf',100)
+	        smallText = pygame.font.Font('freesansbold.ttf',35)
 	        TextSurf, TextRect = self.text_objects("Game Over", largeText)
-	        TextRect.center = ((1000/2),(500/2))
+	        TextRect.center = (int(1000/2),int(500/2))
+	        gameDisplay.blit(TextSurf, TextRect)
+	        TextSurf, TextRect = self.text_objects("Presiona 0 para ver el menu", smallText)
+	        TextRect.center = (int(1000/2),int(700/2))
 	        gameDisplay.blit(TextSurf, TextRect)
 	        pygame.display.update()
 	        clock.tick(15)
 
 	def game_win(self):
 	    intro = True
-
 	    while intro:
 	        for event in pygame.event.get():
-	            print(event)
-	            if event.type == pygame.QUIT:
-	                pygame.quit()
-	                quit()
+	            if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
+	                exit(0)
+	            if event.type == pygame.KEYDOWN:
+	            	if event.key == pygame.K_0:
+	            		intro = False
+	            		self.game_intro()
 	                
 	        gameDisplay.fill(WHITE)
-	        largeText = pygame.font.Font('freesansbold.ttf',115)
+	        largeText = pygame.font.Font('freesansbold.ttf',100)
+	        smallText = pygame.font.Font('freesansbold.ttf',35)
 	        TextSurf, TextRect = self.text_objects("You won", largeText)
-	        TextRect.center = ((1000/2),(500/2))
+	        TextRect.center = (int(1000/2),int(500/2))
+	        gameDisplay.blit(TextSurf, TextRect)
+	        TextSurf, TextRect = self.text_objects("Presiona 0 para ver el menu", smallText)
+	        TextRect.center = (int(1000/2),int(700/2))
 	        gameDisplay.blit(TextSurf, TextRect)
 	        pygame.display.update()
 	        clock.tick(15)
@@ -259,6 +269,7 @@ class Raycaster:
 			for e in pygame.event.get():
 				if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
 					running = False
+					exit(0)
 				if e.type == pygame.KEYDOWN:
 					if e.key == pygame.K_LEFT:
 						r.player["a"] -= pi/20
