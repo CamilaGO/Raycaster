@@ -194,20 +194,53 @@ class Raycaster:
 	            		self.game_start()
 	                
 	        gameDisplay.fill(WHITE)
+	        largeText = pygame.font.Font('freesansbold.ttf',100)
+	        smallText = pygame.font.Font('freesansbold.ttf',40)
+	        TextSurf, TextRect = self.text_objects("Laberinto 8bits", largeText)
+	        TextRect.center = ((1000/2),(500/2))
+	        gameDisplay.blit(TextSurf, TextRect)
+	        TextSurf, TextRect = self.text_objects("Presiona 0 para jugar", smallText)
+	        TextRect.center = ((1000/2),(700/2))
+	        gameDisplay.blit(TextSurf, TextRect)
+	        pygame.display.update()
+	        clock.tick(15)
+
+	def game_over(self):
+	    intro = True
+
+	    while intro:
+	        for event in pygame.event.get():
+	            print(event)
+	            if event.type == pygame.QUIT:
+	                pygame.quit()
+	                quit()
+	                
+	        gameDisplay.fill(WHITE)
 	        largeText = pygame.font.Font('freesansbold.ttf',115)
-	        TextSurf, TextRect = self.text_objects("A bit Racey", largeText)
+	        TextSurf, TextRect = self.text_objects("Game Over", largeText)
 	        TextRect.center = ((1000/2),(500/2))
 	        gameDisplay.blit(TextSurf, TextRect)
 	        pygame.display.update()
 	        clock.tick(15)
 
 	def game_start(self):
-		while True:
+		reloj = pygame.time.Clock()
+ 
+		# Esta es la fuente que usaremos para el textoo que aparecerá en pantalla (tamaño 25)
+		fuente = pygame.font.Font(None, 25)
+		 
+		numero_de_fotogramas = 0
+		tasa_fotogramas = 60
+		instante_de_partida = 5
+
+		paused  = False
+		running = True
+		while running:
 			screen.fill((0,0,0))
 			d = 10
 			for e in pygame.event.get():
 				if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
-					exit(0)
+					running = False
 				if e.type == pygame.KEYDOWN:
 					if e.key == pygame.K_LEFT:
 						r.player["a"] -= pi/20
@@ -219,8 +252,33 @@ class Raycaster:
 					if e.key == pygame.K_DOWN:
 						r.player["x"] -= int(d * cos(r.player["a"]))
 						r.player["y"] -= int(d * sin(r.player["a"]))
+					if e.key == pygame.K_SPACE:
+						paused = not paused
+			if not paused:
+				segundos_totales = numero_de_fotogramas // tasa_fotogramas
+				minutos = segundos_totales // 60
+				segundos = segundos_totales % 60
+				texto_de_salida = "Time: {0:02}:{1:02}".format(minutos, segundos)
+				texto = fuente.render(texto_de_salida, True, WHITE)
+				segundos_totales = instante_de_partida - (numero_de_fotogramas // tasa_fotogramas)
+				if segundos_totales < 0:
+					segundos_totales = 0
+				minutos = segundos_totales // 60
+				segundos = segundos_totales % 60
+				if segundos == 0:
+					self.game_over()
+				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
+				texto = fuente.render(texto_de_salida, True, WHITE)
+				screen.blit(texto, [300, 420])
+				r.render()
+				numero_de_fotogramas += 1
+				reloj.tick(20)
+				pygame.display.flip()
+			"""screen.blit(counting_text, counting_rect)
+			pygame.display.update()
+			clock.tick(25)
 			r.render()
-			pygame.display.flip()
+			pygame.display.flip()"""
 
 
 
@@ -230,7 +288,7 @@ screen.set_alpha(None)
 r = Raycaster(screen)
 r.load_map('./map.txt')
 gameDisplay = pygame.display.set_mode((1000,500))
-pygame.display.set_caption('A bit Racey')
+pygame.display.set_caption('Camila')
 clock = pygame.time.Clock()
 r.game_intro()
 #render loop
