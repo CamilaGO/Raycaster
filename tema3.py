@@ -14,15 +14,15 @@ colors = {
   "3": (0, 0, 255)
 }
 
-wall1 = pygame.image.load('./wall1.png')
-wall2 = pygame.image.load('./wall2.png')
-wall3 = pygame.image.load('./wall3.png')
-wall4 = pygame.image.load('./wall4.png')
+wall1 = pygame.image.load('./wallM1.png')
+wall2 = pygame.image.load('./wallM2.png')
+wall3 = pygame.image.load('./wallM3.png')
+wall4 = pygame.image.load('./wallM4.png')
 wall5 = pygame.image.load('./wall5.png')
 
-enemy1 = pygame.image.load('./sprite1.png')
-enemy2 = pygame.image.load('./sprite2.png')
-enemy3 = pygame.image.load('./sprite3.png')
+enemy1 = pygame.image.load('./jump.png')
+enemy2 = pygame.image.load('./castle.png')
+enemy3 = pygame.image.load('./coinM.png')
 enemy4 = pygame.image.load('./sprite4.png')
 
 hand = pygame.image.load('./player.png')
@@ -40,6 +40,16 @@ enemies = [
 		"x": 100,
 		"y": 200,
 		"texture": enemy1
+	},
+	{
+		"x": 500,
+		"y": 80,
+		"texture": enemy2
+	},
+	{
+		"x": 500,
+		"y": 600,
+		"texture": enemy3
 	}
 ]
 
@@ -317,7 +327,7 @@ pygame.init()
 screen = pygame.display.set_mode((1000, 500))
 screen.set_alpha(None)
 r = Raycaster(screen)
-r.load_map('./map.txt')
+r.load_map('./mapMario.txt')
 gameDisplay = pygame.display.set_mode((1000,500))
 pygame.display.set_caption('Camila')
 clock = pygame.time.Clock()
