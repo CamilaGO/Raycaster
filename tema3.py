@@ -29,12 +29,20 @@ enemy4 = pygame.image.load('./sprite4.png')
 
 hand = pygame.image.load('./player.png')
 
-textures = {
+texturesM = {
 	"1": wall1,
 	"2": wall2,
 	"3": wall3,
 	"4": wall4,
 	"5": wall5,
+}
+
+texturesZ = {
+	"1": pygame.image.load('./wall2.png'),
+	"2": pygame.image.load('./wall2.png'),
+	"3": pygame.image.load('./wall2.png'),
+	"4": pygame.image.load('./wall2.png'),
+	"5": pygame.image.load('./wall2.png'),
 }
 
 enemies = [
@@ -61,6 +69,7 @@ class Raycaster:
 		self.screen = screen
 		self.blocksize = 50
 		self.map = []
+		self.tema = ''
 		self.zbuffer = [-float('inf') for z in range(0, 500)]
 		self.player = {
 		"x": self.blocksize + 20,
@@ -159,6 +168,11 @@ class Raycaster:
 
 	def render(self):
 		#dibuja la vista desde arriba
+		if self.tema == "mario":
+			textures = texturesM
+		if self.tema == "zelda":
+			textures = texturesZ
+
 		for x in range(0, int(self.width / 2), self.blocksize):
 			for y in range(0, self.height, self.blocksize):
 				i = int(x/self.blocksize)
@@ -202,9 +216,11 @@ class Raycaster:
 	            if event.type == pygame.KEYDOWN:
 	            	if event.key == pygame.K_1:
 	            		intro = False
+	            		self.tema = "mario"
 	            		self.game_start_mario()
 	            	if event.key == pygame.K_2:
 	            		intro = False
+	            		self.tema = "zelda"
 	            		self.game_start_zelda()
 	                
 	        gameDisplay.fill(WHITE)
