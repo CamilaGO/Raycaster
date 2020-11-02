@@ -7,6 +7,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (136,136,136)
 BACKGROUND = (0, 255, 255)
+ZCOLOR = (255, 216, 160)
 
 background=pygame.image.load('welcome.png')
 winnerimg =pygame.image.load('winner.png')
@@ -22,7 +23,7 @@ wall1 = pygame.image.load('./wallM1.png')
 wall2 = pygame.image.load('./wallM2.png')
 wall3 = pygame.image.load('./wallM3.png')
 wall4 = pygame.image.load('./wallM4.png')
-wall5 = pygame.image.load('./wall5.png')
+wall5 = pygame.image.load('./wallM5.png')
 
 enemy1 = pygame.image.load('./jump.png')
 enemy2 = pygame.image.load('./castle.png')
@@ -40,11 +41,11 @@ texturesM = {
 }
 
 texturesZ = {
-	"1": pygame.image.load('./wall2.png'),
-	"2": pygame.image.load('./wall2.png'),
-	"3": pygame.image.load('./wall2.png'),
-	"4": pygame.image.load('./wall2.png'),
-	"5": pygame.image.load('./wall2.png'),
+	"1": pygame.image.load('./wallZ1.png'),
+	"2": pygame.image.load('./wallZ2.png'),
+	"3": pygame.image.load('./wallZ3.png'),
+	"4": pygame.image.load('./wallZ4.png'),
+	"5": pygame.image.load('./wallZ5.png'),
 }
 
 enemies = [
@@ -298,10 +299,11 @@ class Raycaster:
 						screen.blit(textoPp, [375,int(500/2)])
 						pygame.display.update()
 						clock.tick(15)
-					if (r.player["x"] > 367) and (r.player["y"] > 263):
+					if (r.player["x"] > 318) and (r.player["y"] > 405):
 						r.player["x"] = 70
 						r.player["y"] = 70
 						self.game_win()
+					print(r.player["x"],r.player["y"])
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
 				minutos = segundos_totales // 60
@@ -334,8 +336,9 @@ class Raycaster:
 	def game_start_zelda(self):
 		self.load_map('./mapZelda.txt')
 		reloj = pygame.time.Clock()
- 
-		# Esta es la fuente que usaremos para el textoo que aparecerá en pantalla (tamaño 25)
+		r.player["x"] = 71
+		r.player["y"] = 123
+
 		fuente = pygame.font.Font(None, 25)
 		fuentep = pygame.font.Font(None, 100)
 		numero_de_fotogramas = 0
@@ -345,7 +348,7 @@ class Raycaster:
 		paused  = False
 		running = True
 		while running:
-			screen.fill((0,0,0))
+			screen.fill(ZCOLOR)
 			d = 10
 			for e in pygame.event.get():
 				if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
@@ -373,6 +376,7 @@ class Raycaster:
 						r.player["x"] = 70
 						r.player["y"] = 70
 						self.game_win()
+					print(r.player["x"],r.player["y"])
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
 				minutos = segundos_totales // 60
