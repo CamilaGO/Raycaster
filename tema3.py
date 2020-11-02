@@ -9,6 +9,8 @@ GRAY = (136,136,136)
 BACKGROUND = (0, 255, 255)
 
 background=pygame.image.load('welcome.png')
+winnerimg =pygame.image.load('winner.png')
+goimg =pygame.image.load('gameover.png')
 
 colors = {
   "1": (255, 0, 0),
@@ -222,8 +224,7 @@ class Raycaster:
 	            		intro = False
 	            		self.tema = "zelda"
 	            		self.game_start_zelda()
-	                
-	        gameDisplay.fill(WHITE)
+	             
 	        screen.blit(background, (0,0))
 	        pygame.display.update()
 	        clock.tick(15)
@@ -240,38 +241,22 @@ class Raycaster:
 	            		intro =False
 	            		self.game_intro()
 	                
-	        gameDisplay.fill(GRAY)
-	        largeText = pygame.font.Font('freesansbold.ttf',100)
-	        smallText = pygame.font.Font('freesansbold.ttf',35)
-	        TextSurf, TextRect = self.text_objects("Game Over", largeText)
-	        TextRect.center = (int(1000/2),int(500/2))
-	        gameDisplay.blit(TextSurf, TextRect)
-	        TextSurf, TextRect = self.text_objects("Presiona 0 para ver el menu", smallText)
-	        TextRect.center = (int(1000/2),int(700/2))
-	        gameDisplay.blit(TextSurf, TextRect)
+	        screen.blit(goimg, (0,0))
 	        pygame.display.update()
 	        clock.tick(15)
 
 	def game_win(self):
 	    intro = True
 	    while intro:
-	        for event in pygame.event.get():
+	        for e in pygame.event.get():
 	            if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
 	                exit(0)
-	            if event.type == pygame.KEYDOWN:
-	            	if event.key == pygame.K_0:
+	            if e.type == pygame.KEYDOWN:
+	            	if e.key == pygame.K_0:
 	            		intro = False
 	            		self.game_intro()
 	                
-	        gameDisplay.fill(WHITE)
-	        largeText = pygame.font.Font('freesansbold.ttf',100)
-	        smallText = pygame.font.Font('freesansbold.ttf',35)
-	        TextSurf, TextRect = self.text_objects("You won", largeText)
-	        TextRect.center = (int(1000/2),int(500/2))
-	        gameDisplay.blit(TextSurf, TextRect)
-	        TextSurf, TextRect = self.text_objects("Presiona 0 para ver el menu", smallText)
-	        TextRect.center = (int(1000/2),int(700/2))
-	        gameDisplay.blit(TextSurf, TextRect)
+	        screen.blit(winnerimg, (0,0))
 	        pygame.display.update()
 	        clock.tick(15)
 
@@ -281,7 +266,7 @@ class Raycaster:
  
 		# Esta es la fuente que usaremos para el textoo que aparecerá en pantalla (tamaño 25)
 		fuente = pygame.font.Font(None, 25)
-		 
+		fuentep = pygame.font.Font(None, 100)
 		numero_de_fotogramas = 0
 		tasa_fotogramas = 60
 		instante_de_partida = 5
@@ -308,7 +293,14 @@ class Raycaster:
 						r.player["y"] -= int(d * sin(r.player["a"]))
 					if e.key == pygame.K_SPACE:
 						paused = not paused
+						texto_paused = "Paused"
+						textoPp = fuentep.render(texto_paused, True, WHITE)
+						screen.blit(textoPp, [375,int(500/2)])
+						pygame.display.update()
+						clock.tick(15)
 					if (r.player["x"] > 367) and (r.player["y"] > 263):
+						r.player["x"] = 70
+						r.player["y"] = 70
 						self.game_win()
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
@@ -326,6 +318,9 @@ class Raycaster:
 				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
 				texto = fuente.render(texto_de_salida, True, WHITE)
 				screen.blit(texto, [300, 420])
+				texto_de_pausa = "Press P to pause"
+				textoP = fuente.render(texto_de_pausa, True, WHITE)
+				screen.blit(textoP, [800, 50])
 				r.render()
 				numero_de_fotogramas += 1
 				reloj.tick(20)
@@ -342,7 +337,7 @@ class Raycaster:
  
 		# Esta es la fuente que usaremos para el textoo que aparecerá en pantalla (tamaño 25)
 		fuente = pygame.font.Font(None, 25)
-		 
+		fuentep = pygame.font.Font(None, 100)
 		numero_de_fotogramas = 0
 		tasa_fotogramas = 60
 		instante_de_partida = 5
@@ -369,7 +364,14 @@ class Raycaster:
 						r.player["y"] -= int(d * sin(r.player["a"]))
 					if e.key == pygame.K_SPACE:
 						paused = not paused
+						texto_paused = "Paused"
+						textoPp = fuentep.render(texto_paused, True, WHITE)
+						screen.blit(textoPp, [375,int(500/2)])
+						pygame.display.update()
+						clock.tick(15)
 					if (r.player["x"] > 367) and (r.player["y"] > 263):
+						r.player["x"] = 70
+						r.player["y"] = 70
 						self.game_win()
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
@@ -387,6 +389,9 @@ class Raycaster:
 				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
 				texto = fuente.render(texto_de_salida, True, WHITE)
 				screen.blit(texto, [300, 420])
+				texto_de_pausa = "Press P to pause"
+				textoP = fuente.render(texto_de_pausa, True, WHITE)
+				screen.blit(textoP, [800, 50])
 				r.render()
 				numero_de_fotogramas += 1
 				reloj.tick(20)
