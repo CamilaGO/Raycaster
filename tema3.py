@@ -46,9 +46,11 @@ texturesZ = {
 	"3": pygame.image.load('./wallZ3.png'),
 	"4": pygame.image.load('./wallZ4.png'),
 	"5": pygame.image.load('./wallZ5.png'),
+	"6": pygame.image.load('./wallZ6.png'),
+	"7": pygame.image.load('./wallZ7.png'),
 }
 
-enemies = [
+enemiesM = [
 	{
 		"x": 100,
 		"y": 200,
@@ -64,6 +66,9 @@ enemies = [
 		"y": 600,
 		"texture": enemy3
 	}
+]
+
+enemiesZ = [
 ]
 
 class Raycaster:
@@ -173,8 +178,10 @@ class Raycaster:
 		#dibuja la vista desde arriba
 		if self.tema == "mario":
 			textures = texturesM
+			enemies = enemiesM
 		if self.tema == "zelda":
 			textures = texturesZ
+			enemies = enemiesZ
 
 		for x in range(0, int(self.width / 2), self.blocksize):
 			for y in range(0, self.height, self.blocksize):
@@ -336,8 +343,8 @@ class Raycaster:
 	def game_start_zelda(self):
 		self.load_map('./mapZelda.txt')
 		reloj = pygame.time.Clock()
-		r.player["x"] = 71
-		r.player["y"] = 123
+		r.player["x"] = 80
+		r.player["y"] = 176
 
 		fuente = pygame.font.Font(None, 25)
 		fuentep = pygame.font.Font(None, 100)
@@ -392,7 +399,7 @@ class Raycaster:
 					self.game_over()
 				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
 				texto = fuente.render(texto_de_salida, True, WHITE)
-				screen.blit(texto, [300, 420])
+				screen.blit(texto, [270, 370])
 				texto_de_pausa = "Press P to pause"
 				textoP = fuente.render(texto_de_pausa, True, WHITE)
 				screen.blit(textoP, [800, 50])
