@@ -19,25 +19,15 @@ colors = {
   "3": (0, 0, 255)
 }
 
-wall1 = pygame.image.load('./wallM1.png')
-wall2 = pygame.image.load('./wallM2.png')
-wall3 = pygame.image.load('./wallM3.png')
-wall4 = pygame.image.load('./wallM4.png')
-wall5 = pygame.image.load('./wallM5.png')
-
-enemy1 = pygame.image.load('./jump.png')
-enemy2 = pygame.image.load('./castle.png')
-enemy3 = pygame.image.load('./coinM.png')
-enemy4 = pygame.image.load('./sprite4.png')
 
 hand = pygame.image.load('./player.png')
 
 texturesM = {
-	"1": wall1,
-	"2": wall2,
-	"3": wall3,
-	"4": wall4,
-	"5": wall5,
+	"1": pygame.image.load('./wallM1.png'),
+	"2": pygame.image.load('./wallM2.png'),
+	"3": pygame.image.load('./wallM3.png'),
+	"4": pygame.image.load('./wallM4.png'),
+	"5": pygame.image.load('./wallM5.png'),
 }
 
 texturesZ = {
@@ -50,25 +40,88 @@ texturesZ = {
 	"7": pygame.image.load('./wallZ7.png'),
 }
 
+texturesP = {
+	"1": pygame.image.load('./wallP1.png'),
+	"2": pygame.image.load('./wallP2.png'),
+	"3": pygame.image.load('./wallP3.png'),
+	"4": pygame.image.load('./wallP1.png'),
+	"5": pygame.image.load('./wallP1.png'),
+	"6": pygame.image.load('./wallP1.png'),
+	"7": pygame.image.load('./wallP1.png'),
+}
+
 enemiesM = [
 	{
-		"x": 100,
-		"y": 200,
-		"texture": enemy1
+		"x": 80,
+		"y": 150,
+		"texture": pygame.image.load('./jump.png')
 	},
 	{
 		"x": 500,
 		"y": 80,
-		"texture": enemy2
+		"texture": pygame.image.load('./castleM.png')
 	},
 	{
 		"x": 500,
 		"y": 600,
-		"texture": enemy3
+		"texture": pygame.image.load('./coinM.png')
+	},
+	{
+		"x": 208,
+		"y": 174,
+		"texture": pygame.image.load('./coinM.png')
+	},
+	{
+		"x": 344,
+		"y": 262,
+		"texture": pygame.image.load('./enemyM.png')
 	}
 ]
 
 enemiesZ = [
+	{
+		"x": 315,
+		"y": 275,
+		"texture": pygame.image.load('./linkZ.png')
+	},
+	{
+		"x": 300,
+		"y": 170,
+		"texture": pygame.image.load('./keyZ.png')
+	},
+	{
+		"x": 90,
+		"y": 350,
+		"texture": pygame.image.load('./enemyZ.png')
+	}
+]
+
+enemiesP = [
+	{
+		"x": 100,
+		"y": 300,
+		"texture": pygame.image.load('./enemyP1.png')
+	},
+	{
+		"x": 250,
+		"y": 262,
+		"texture": pygame.image.load('./enemyP2.png')
+	},
+	{
+		"x": 400,
+		"y": 167,
+		"texture": pygame.image.load('./enemyP3.png')
+	},
+	{
+		"x": 158,
+		"y": 125,
+		"texture": pygame.image.load('./enemyP4.png')
+	},
+	{
+		"x": 320,
+		"y": 360,
+		"texture": pygame.image.load('./cherryP.png')
+	}
 ]
 
 class Raycaster:
@@ -182,6 +235,9 @@ class Raycaster:
 		if self.tema == "zelda":
 			textures = texturesZ
 			enemies = enemiesZ
+		if self.tema == "pacman":
+			textures = texturesP
+			enemies = enemiesP
 
 		for x in range(0, int(self.width / 2), self.blocksize):
 			for y in range(0, self.height, self.blocksize):
@@ -232,6 +288,10 @@ class Raycaster:
 	            		intro = False
 	            		self.tema = "zelda"
 	            		self.game_start_zelda()
+	            	if event.key == pygame.K_3:
+	            		intro = False
+	            		self.tema = "pacman"
+	            		self.game_start_pacman()
 	             
 	        screen.blit(background, (0,0))
 	        pygame.display.update()
@@ -299,14 +359,14 @@ class Raycaster:
 					if e.key == pygame.K_DOWN:
 						r.player["x"] -= int(d * cos(r.player["a"]))
 						r.player["y"] -= int(d * sin(r.player["a"]))
-					if e.key == pygame.K_SPACE:
+					if e.key == pygame.K_p:
 						paused = not paused
 						texto_paused = "Paused"
 						textoPp = fuentep.render(texto_paused, True, WHITE)
 						screen.blit(textoPp, [375,int(500/2)])
 						pygame.display.update()
 						clock.tick(15)
-					if (r.player["x"] > 318) and (r.player["y"] > 405):
+					if (r.player["x"] > 318) and (r.player["y"] > 380):
 						r.player["x"] = 70
 						r.player["y"] = 70
 						self.game_win()
@@ -372,14 +432,87 @@ class Raycaster:
 					if e.key == pygame.K_DOWN:
 						r.player["x"] -= int(d * cos(r.player["a"]))
 						r.player["y"] -= int(d * sin(r.player["a"]))
-					if e.key == pygame.K_SPACE:
+					if e.key == pygame.K_p:
 						paused = not paused
 						texto_paused = "Paused"
 						textoPp = fuentep.render(texto_paused, True, WHITE)
 						screen.blit(textoPp, [375,int(500/2)])
 						pygame.display.update()
 						clock.tick(15)
-					if (r.player["x"] > 367) and (r.player["y"] > 263):
+					if (r.player["x"] > 317) and (r.player["y"] > 210):
+						r.player["x"] = 70
+						r.player["y"] = 70
+						self.game_win()
+					print(r.player["x"],r.player["y"])
+			if not paused:
+				segundos_totales = numero_de_fotogramas // tasa_fotogramas
+				minutos = segundos_totales // 60
+				segundos = segundos_totales % 60
+				texto_de_salida = "Time: {0:02}:{1:02}".format(minutos, segundos)
+				texto = fuente.render(texto_de_salida, True, WHITE)
+				segundos_totales = instante_de_partida - (numero_de_fotogramas // tasa_fotogramas)
+				if segundos_totales < 0:
+					segundos_totales = 0
+				minutos = segundos_totales // 60
+				segundos = segundos_totales % 60
+				if segundos == 0:
+					self.game_over()
+				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
+				texto = fuente.render(texto_de_salida, True, WHITE)
+				screen.blit(texto, [270, 370])
+				texto_de_pausa = "Press P to pause"
+				textoP = fuente.render(texto_de_pausa, True, WHITE)
+				screen.blit(textoP, [800, 50])
+				r.render()
+				numero_de_fotogramas += 1
+				reloj.tick(20)
+				pygame.display.flip()
+			"""screen.blit(counting_text, counting_rect)
+			pygame.display.update()
+			clock.tick(25)
+			r.render()
+			pygame.display.flip()"""
+
+	def game_start_pacman(self):
+		self.load_map('./mapPacman.txt')
+		reloj = pygame.time.Clock()
+		r.player["x"] = 70
+		r.player["y"] = 70
+
+		fuente = pygame.font.Font(None, 25)
+		fuentep = pygame.font.Font(None, 100)
+		numero_de_fotogramas = 0
+		tasa_fotogramas = 60
+		instante_de_partida = 5
+
+		paused  = False
+		running = True
+		while running:
+			screen.fill(BLACK)
+			d = 10
+			for e in pygame.event.get():
+				if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
+					running = False
+					exit(0)
+				if e.type == pygame.KEYDOWN:
+					if e.key == pygame.K_LEFT:
+						r.player["a"] -= pi/20
+					if e.key == pygame.K_RIGHT:
+						r.player["a"] += pi/20
+					if e.key == pygame.K_UP:
+						r.player["x"] += int(d * cos(r.player["a"]))
+						r.player["y"] += int(d * sin(r.player["a"]))
+					if e.key == pygame.K_DOWN:
+						r.player["x"] -= int(d * cos(r.player["a"]))
+						r.player["y"] -= int(d * sin(r.player["a"]))
+					if e.key == pygame.K_p:
+						paused = not paused
+						texto_paused = "Paused"
+						textoPp = fuentep.render(texto_paused, True, WHITE)
+						screen.blit(textoPp, [375,int(500/2)])
+						pygame.display.update()
+						clock.tick(15)
+					if (r.player["x"] > 310) and (r.player["y"] > 360):
 						r.player["x"] = 70
 						r.player["y"] = 70
 						self.game_win()
