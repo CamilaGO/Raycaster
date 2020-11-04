@@ -1,7 +1,9 @@
 import pygame
-from math import pi, cos, sin, atan2
-import time
-import random
+import pygame.freetype
+from pygame.sprite import Sprite
+from pygame.rect import Rect
+from enum import Enum
+from math import cos, sin, pi, atan2
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -272,6 +274,12 @@ class Raycaster:
 	    textSurface = font.render(text, True, BLACK)
 	    return textSurface, textSurface.get_rect()
 
+	def updateFPS(self, color):
+		font = pygame.font.Font(None, 25)
+		fps = "FPS: " + str(int(clock.get_fps()))
+		fps = font.render(fps, 1, color)
+		return fps
+
 	def game_intro(self):
 	    intro = True
 
@@ -396,6 +404,7 @@ class Raycaster:
 				texto_de_pausa = "Press P to pause"
 				textoP = fuente.render(texto_de_pausa, True, WHITE)
 				screen.blit(textoP, [800, 50])
+				screen.blit(self.updateFPS(WHITE), (300, 390)) #el FPS del juego
 				r.render()
 				numero_de_fotogramas += 1
 				reloj.tick(20)
@@ -470,11 +479,12 @@ class Raycaster:
 				if segundos == 0:
 					self.game_over()
 				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
-				texto = fuente.render(texto_de_salida, True, WHITE)
+				texto = fuente.render(texto_de_salida, True, BLACK)
 				screen.blit(texto, [270, 370])
 				texto_de_pausa = "Press P to pause"
-				textoP = fuente.render(texto_de_pausa, True, WHITE)
+				textoP = fuente.render(texto_de_pausa, True, BLACK)
 				screen.blit(textoP, [800, 50])
+				screen.blit(self.updateFPS(BLACK), (270, 350)) #el FPS del juego
 				r.render()
 				numero_de_fotogramas += 1
 				reloj.tick(20)
@@ -554,6 +564,7 @@ class Raycaster:
 				texto_de_pausa = "Press P to pause"
 				textoP = fuente.render(texto_de_pausa, True, WHITE)
 				screen.blit(textoP, [800, 50])
+				screen.blit(self.updateFPS(WHITE), (300, 390)) #el FPS del juego
 				r.render()
 				numero_de_fotogramas += 1
 				reloj.tick(20)
