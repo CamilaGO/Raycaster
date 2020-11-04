@@ -280,9 +280,24 @@ class Raycaster:
 		fps = font.render(fps, 1, color)
 		return fps
 
+	def winner_sound(self):
+		pygame.mixer.music.load('./tada.mp3')
+		pygame.mixer.music.set_volume(0.8)
+		pygame.mixer.music.play(0)
+
+	def loser_sound(self):
+		pygame.mixer.music.load('./loser.mp3')
+		pygame.mixer.music.set_volume(0.8)
+		pygame.mixer.music.play(0)
+
+	def game_music(self):
+		pygame.mixer.music.load('./never.mp3')
+		pygame.mixer.music.set_volume(0.8)
+		pygame.mixer.music.play(0)
+
 	def game_intro(self):
 	    intro = True
-
+	    r.game_music()
 	    while intro:
 	        for event in pygame.event.get():
 	            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -307,7 +322,7 @@ class Raycaster:
 
 	def game_over(self):
 	    intro = True
-
+	    r.loser_sound()
 	    while intro:
 	        for event in pygame.event.get():
 	            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -323,6 +338,7 @@ class Raycaster:
 
 	def game_win(self):
 	    intro = True
+	    r.winner_sound()
 	    while intro:
 	        for e in pygame.event.get():
 	            if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
