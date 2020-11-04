@@ -371,6 +371,12 @@ class Raycaster:
 						r.player["y"] = 70
 						self.game_win()
 					print(r.player["x"],r.player["y"])
+				if e.type == pygame.MOUSEBUTTONDOWN or e.type == pygame.MOUSEBUTTONUP:
+					if not paused:
+						if e.button == 4:
+							r.player["a"] -= pi/20
+						if e.button == 5:
+							r.player["a"] += pi/20
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
 				minutos = segundos_totales // 60
@@ -444,6 +450,12 @@ class Raycaster:
 						r.player["y"] = 70
 						self.game_win()
 					print(r.player["x"],r.player["y"])
+				if e.type == pygame.MOUSEBUTTONDOWN or e.type == pygame.MOUSEBUTTONUP:
+					if not paused:
+						if e.button == 4:
+							r.player["a"] -= pi/20
+						if e.button == 5:
+							r.player["a"] += pi/20
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
 				minutos = segundos_totales // 60
@@ -517,6 +529,12 @@ class Raycaster:
 						r.player["y"] = 70
 						self.game_win()
 					print(r.player["x"],r.player["y"])
+				if e.type == pygame.MOUSEBUTTONDOWN or e.type == pygame.MOUSEBUTTONUP:
+					if not paused:
+						if e.button == 4:
+							r.player["a"] -= pi/20
+						if e.button == 5:
+							r.player["a"] += pi/20
 			if not paused:
 				segundos_totales = numero_de_fotogramas // tasa_fotogramas
 				minutos = segundos_totales // 60
