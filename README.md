@@ -1,8 +1,17 @@
-# Lab 4 de Gráficas
-## Raycaster
+# Proyecto 3 - gráficas
 
-Para renderizar el trabajo correr el documento ```tema3.py```
+### Requerimientos
+Para poder utilizar el juego 
+- ```py -m pip install -U pygame --user```
+- Tener audio encendido
+- Python 3 mínimo
 
-Para ganar el jugador debe llegar al área circulada en menos de 5 segundos
+### Ejecución
+Para correr el juego 
 
-![alt text](https://github.com/CamilaGO/Raycaster/blob/main/meta.JPG?raw=true)
+```shell
+$ python tema3.py
+```
+
+### _Demo_
+[Video](https://youtu.be/dAlyMBsZxHw)
