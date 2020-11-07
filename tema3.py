@@ -212,7 +212,7 @@ class Raycaster:
 
 		for x in range(sprite_x, sprite_x + sprite_size):
 			for y in range(sprite_y, sprite_y + sprite_size):
-				if 500 < x < 1000 and self.zbuffer[x - 500] <= sprite_d:
+				if 500 < x < 1000 and self.zbuffer[x - 500] >= sprite_d:
 					tx = int((x - sprite_x) * 128/sprite_size)
 					ty = int((y - sprite_y) * 128/sprite_size)
 					c = sprite["texture"].get_at((tx, ty))
@@ -254,6 +254,7 @@ class Raycaster:
 		for i in range(0, 500):
 			a =  self.player["a"] - self.player["fov"]/2 + (i * self.player["fov"] / 500)
 			d, m, tx = self.cast_ray(a)
+			self.zbuffer[i] = d
 			x = 500 + i
 			h = (500 /(d * cos(a - self.player["a"]))) * 50
 			self.draw_stake(x, h, tx, textures[m])
@@ -493,6 +494,8 @@ class Raycaster:
 				minutos = segundos_totales // 60
 				segundos = segundos_totales % 60
 				if segundos == 0:
+					r.player["x"] = 80
+					r.player["y"] = 176
 					self.game_over()
 				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
 				texto = fuente.render(texto_de_salida, True, BLACK)
@@ -573,14 +576,16 @@ class Raycaster:
 				minutos = segundos_totales // 60
 				segundos = segundos_totales % 60
 				if segundos == 0:
+					r.player["x"] = 70
+					r.player["y"] = 70
 					self.game_over()
 				texto_de_salida = "Time left: {0:02}:{1:02}".format(minutos, segundos)
 				texto = fuente.render(texto_de_salida, True, WHITE)
-				screen.blit(texto, [270, 370])
+				screen.blit(texto, [270, 360])
 				texto_de_pausa = "Press P to pause"
 				textoP = fuente.render(texto_de_pausa, True, WHITE)
 				screen.blit(textoP, [800, 50])
-				screen.blit(self.updateFPS(WHITE), (300, 390)) #el FPS del juego
+				screen.blit(self.updateFPS(WHITE), (270, 380)) #el FPS del juego
 				r.render()
 				numero_de_fotogramas += 1
 				reloj.tick(20)
